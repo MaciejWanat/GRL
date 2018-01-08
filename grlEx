@@ -5,5 +5,5 @@ NODE 1 "Node one";
 NODE 2 "Node two";
 NODE 3;
 EDGE 1--2 "Edge one";
-EDGE 1->3;
+EDGE 1--3;
 END_GRAPH;
