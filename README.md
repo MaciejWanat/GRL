@@ -9,11 +9,11 @@ Contents:
 
 # GRL Documentation
 
+* Each line ends with and ';'
 * Comments starts with '#':
 ```
 # An example comment
 ```
-* Each line ends with and ';'
 * To start a new graph:
 ```
 BEGIN_GRAPH "GraphName";
@@ -31,5 +31,5 @@ EDGE 1--3 "Edge label";
 Edge label is optional. You can use -> to make a directed edge.
 * To end a graph:
 ```
-END_GRAPH
+END_GRAPH;
 ```
