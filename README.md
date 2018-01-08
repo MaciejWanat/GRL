@@ -9,7 +9,7 @@ Contents:
 
 # GRL Documentation
 
-* Each line ends with and ';'
+* Each line ends with a ';'.
 * Comments starts with '#':
 ```
 # An example comment
