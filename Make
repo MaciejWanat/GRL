@@ -1,7 +1,7 @@
 #!usr/bin/bash
 
 lex grl.l
-yacc grl.y
+yacc -d grl.y
 gcc lex.yy.c y.tab.c -o grl.c
 ./grl.c < grlEx > grlEx.dot
 dot -Tps grlEx.dot -o grlEx.ps
