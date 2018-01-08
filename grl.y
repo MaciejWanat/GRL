@@ -14,12 +14,18 @@
 
     main()
     {
-            yyparse();
+          yyparse();
     }
 
 %}
 
-%token BEGINGRAPH NODE EDGE ENDGRAPH DIRECTED NONDIRECTED STRINGNAME ID
+%union
+{
+    char *str;
+}
+
+%token BEGINGRAPH NODE EDGE ENDGRAPH DIRECTED NONDIRECTED ENDLINE
+%token <str> STRINGNAME ID
 
 %%
 
@@ -29,6 +35,8 @@ commands: /* empty */
 
 command:
         startGraph
+        |
+        startGraphLabel
         |
         buildNode
         |
@@ -46,56 +54,63 @@ command:
         ;
 
 startGraph:
-        BEGINGRAPH
+        BEGINGRAPH ENDLINE
         {
-                printf("graph {\n");
+                printf("graph {");
         }
         ;
 
-buildNodeLabel:
-        NODE ID STRINGNAME
+startGraphLabel:
+        BEGINGRAPH STRINGNAME ENDLINE
         {
-                printf("make node (with label);\n");
+                printf("graph %s {", $2);
         }
         ;
 
 buildNode:
-        NODE ID
+        NODE ID ENDLINE
         {
-                printf("make node (no label);\n");
+                printf("\t%s;", $2);
+        }
+        ;
+
+buildNodeLabel:
+        NODE ID STRINGNAME ENDLINE
+        {
+                printf("\t%s [label=%s];", $2, $3);
         }
         ;
 
 directedEdgeLabel:
-        EDGE ID DIRECTED ID STRINGNAME
+        EDGE ID DIRECTED ID STRINGNAME ENDLINE
         {
-                printf("Directed edge with label...;\n");
+                printf("\t%s->%s [label=%s];", $2, $4, $5);
         }
         ;
 
 directedEdge:
-        EDGE ID DIRECTED ID
+        EDGE ID DIRECTED ID ENDLINE
         {
-                printf("Directed edge...;\n");
+                printf("\t%s->%s;", $2, $4);
         }
         ;
 
 nonDirectedEdgeLabel:
-        EDGE ID NONDIRECTED ID STRINGNAME
+        EDGE ID NONDIRECTED ID STRINGNAME ENDLINE
         {
-                printf("Non directed edge with label...;\n");
+                printf("\t%s--%s [label=%s];", $2, $4, $5);
         }
         ;
 
 nonDirectedEdge:
-        EDGE ID NONDIRECTED ID
+        EDGE ID NONDIRECTED ID ENDLINE
         {
-                printf("Non directed edge...;\n");
+                printf("\t%s--%s;", $2, $4);
         }
         ;
 
 endGraph:
-        ENDGRAPH
+        ENDGRAPH ENDLINE
         {
                 printf("}");
         }

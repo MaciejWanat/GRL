@@ -6,11 +6,13 @@
 %%
 
 "#".*                         ;
+" "                           ;
+";"                           return ENDLINE;
 BEGIN_GRAPH                   return BEGINGRAPH;
 NODE                          return NODE;
 EDGE                          return EDGE;
 END_GRAPH                     return ENDGRAPH;
 "->"                          return DIRECTED;
 "--"                          return NONDIRECTED;
-\'([a-z]|[A-Z]|[0-9]|" ")*\'  return STRINGNAME;
-([a-z]|[A-Z]|[0-9])           return ID;
+\"([a-z]|[A-Z]|[0-9]|" ")*\"  yylval.str = strdup(yytext); return STRINGNAME;
+([a-z]|[A-Z]|[0-9])+          yylval.str = strdup(yytext); return ID;
