@@ -9,6 +9,7 @@
 " "                           ;
 ";"                           return ENDLINE;
 BEGIN_GRAPH                   return BEGINGRAPH;
+BEGIN_DIGRAPH                   return BEGINDIGRAPH;
 NODE                          return NODE;
 EDGE                          return EDGE;
 END_GRAPH                     return ENDGRAPH;

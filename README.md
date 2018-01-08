@@ -18,6 +18,10 @@ Contents:
 ```
 BEGIN_GRAPH "GraphName";
 ```
+* To start a new driected graph:
+```
+BEGIN_DIGRAPH "GraphName";
+```
 Graph name is optional.
 * To draw a new node:
 ```

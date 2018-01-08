@@ -24,7 +24,7 @@
     char *str;
 }
 
-%token BEGINGRAPH NODE EDGE ENDGRAPH DIRECTED NONDIRECTED ENDLINE
+%token BEGINDIGRAPH BEGINGRAPH NODE EDGE ENDGRAPH DIRECTED NONDIRECTED ENDLINE
 %token <str> STRINGNAME ID
 
 %%
@@ -37,6 +37,10 @@ command:
         startGraph
         |
         startGraphLabel
+        |
+        startDiGraph
+        |
+        startDiGraphLabel
         |
         buildNode
         |
@@ -64,6 +68,20 @@ startGraphLabel:
         BEGINGRAPH STRINGNAME ENDLINE
         {
                 printf("graph %s {", $2);
+        }
+        ;
+
+startDiGraph:
+        BEGINDIGRAPH ENDLINE
+        {
+                printf("digraph {");
+        }
+        ;
+
+startDiGraphLabel:
+        BEGINDIGRAPH STRINGNAME ENDLINE
+        {
+                printf("digraph %s {", $2);
         }
         ;
 
