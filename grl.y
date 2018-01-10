@@ -33,28 +33,17 @@ commands: /* empty */
         | commands command
         ;
 
-command:
-        startGraph
-        |
-        startGraphLabel
-        |
-        startDiGraph
-        |
-        startDiGraphLabel
-        |
-        buildNode
-        |
-        buildNodeLabel
-        |
-        directedEdge
-        |
-        nonDirectedEdge
-        |
-        directedEdgeLabel
-        |
-        nonDirectedEdgeLabel
-        |
-        endGraph
+command: startGraph
+        | startGraphLabel
+        | startDiGraph
+        | startDiGraphLabel
+        | buildNode
+        | buildNodeLabel
+        | directedEdge
+        | nonDirectedEdge
+        | directedEdgeLabel
+        | nonDirectedEdgeLabel
+        | endGraph
         ;
 
 startGraph:
