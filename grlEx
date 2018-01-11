@@ -3,10 +3,14 @@
 DEFAULT_SHAPE "square";
 DEFAULT_STYLE "dotted";
 BEGIN_DIGRAPH "GraphInGRL";
-NODE 1 "Node one";
+NODE 1 "Node one" SHAPE="box" STYLE="filled";
 NODE 2 "Node two";
-NODE 3;
+NODE 3 SHAPE="egg" STYLE="filled";
 EDGE 1->2 "2";
 EDGE 1->3 "dotted edge" STYLE="dotted";
 EDGE 2->3;
+NODE 4 "Extra";
+NODE 5 "Extra 2" STYLE="filled" SHAPE="star";
+EDGE 3->4 STYLE="dotted";
+EDGE 4->5;
 END_GRAPH;

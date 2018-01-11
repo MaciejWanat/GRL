@@ -42,6 +42,11 @@ EDGE 1->3 STYLE="dotted";
 ```
 END_GRAPH;
 ```
+* To set a node shape or style:
+```
+NODE 5 "Extra 2" STYLE="filled" SHAPE="star";
+```
+All flags are optional.
 * To set a default node shape:
 ```
 DEFAULT_SHAPE "circle";

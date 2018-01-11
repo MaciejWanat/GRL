@@ -30,7 +30,7 @@
     char *str;
 }
 
-%token STYLE BEGINDIGRAPH BEGINGRAPH NODE EDGE ENDGRAPH DIRECTED NONDIRECTED ENDLINE
+%token STYLE SHAPE BEGINDIGRAPH BEGINGRAPH NODE EDGE ENDGRAPH DIRECTED NONDIRECTED ENDLINE
 %token <str> STRINGNAME ID DEFAULTNODESHAPE DEFAULTNODESTYLE
 
 %%
@@ -55,15 +55,24 @@ startGraph:
         ;
 
 buildNode:
-        NODE ID ENDLINE
-        {
-              printf("\t%s [%s%s%s%s];", $2, defaultNodeStyleStart, defaultNodeStyle, defaultNodeShapeStart, defaultNodeShape);
-        }
-        | NODE ID STRINGNAME ENDLINE
-        {
-              printf("\t%s [label=%s%s%s%s%s];", $2, $3, defaultNodeShapeStart, defaultNodeShape, defaultNodeStyleStart, defaultNodeStyle);
-        }
+        buildNoLabel
+        | buildWithLabel
         ;
+
+buildNoLabel:
+        NODE ID ENDLINE { printf("\t%s [%s%s%s%s];", $2, defaultNodeStyleStart, defaultNodeStyle, defaultNodeShapeStart, defaultNodeShape); }
+        | NODE ID STYLE STRINGNAME ENDLINE { printf("\t%s [%s%s style=%s];", $2, defaultNodeShapeStart, defaultNodeShape, $4); }
+        | NODE ID SHAPE STRINGNAME ENDLINE { printf("\t%s [shape=%s%s%s];", $2, $4, defaultNodeStyleStart, defaultNodeStyle); }
+        | NODE ID STYLE STRINGNAME SHAPE STRINGNAME ENDLINE { printf("\t%s [shape=%s style=%s];", $2, $6, $4); }
+        | NODE ID SHAPE STRINGNAME STYLE STRINGNAME ENDLINE { printf("\t%s [shape=%s style=%s];", $2, $4, $6); }
+
+buildWithLabel:
+        NODE ID STRINGNAME ENDLINE { printf("\t%s [label=%s%s%s%s%s];", $2, $3, defaultNodeStyleStart, defaultNodeStyle, defaultNodeShapeStart, defaultNodeShape); }
+        | NODE ID STRINGNAME SHAPE STRINGNAME ENDLINE { printf("\t%s [label=%s shape=%s%s%s];", $2, $3, $5, defaultNodeStyleStart, defaultNodeStyle); }
+        | NODE ID STRINGNAME STYLE STRINGNAME ENDLINE { printf("\t%s [label=%s%s%s style=%s];", $2, $3, defaultNodeShapeStart, defaultNodeShape, $5); }
+        | NODE ID STRINGNAME STYLE STRINGNAME SHAPE STRINGNAME ENDLINE { printf("\t%s [label= %s shape=%s style=%s];", $2, $3, $7, $5); }
+        | NODE ID STRINGNAME SHAPE STRINGNAME STYLE STRINGNAME ENDLINE { printf("\t%s [label= %s shape=%s style=%s];", $2, $3, $5, $7); }
+
 
 buildEdge:
         buildNonDirected
@@ -79,7 +88,7 @@ buildDirected:
 
 buildNonDirected:
          EDGE ID NONDIRECTED ID STRINGNAME ENDLINE { printf("\t%s -- %s [label=%s];", $2, $4, $5); }
-        | EDGE ID NONDIRECTED ID ENDLINE { printf("\t%s -- %s;", $2, $4);}
+        | EDGE ID NONDIRECTED ID ENDLINE { printf("\t%s -- %s;", $2, $4); }
         | EDGE ID NONDIRECTED ID STRINGNAME STYLE STRINGNAME ENDLINE { printf("\t%s -> %s [label=%s, style=%s];", $2, $4, $5, $7); }
         | EDGE ID NONDIRECTED ID STYLE STRINGNAME ENDLINE { printf("\t%s -> %s [style=%s];", $2, $4, $6); }
 
