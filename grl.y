@@ -70,7 +70,6 @@ buildNode:
 buildEdge:
         EDGE ID DIRECTED ID STRINGNAME ENDLINE { printf("\t%s -> %s [label=%s];", $2, $4, $5); }
         | EDGE ID DIRECTED ID ENDLINE { printf("\t%s -> %s;", $2, $4); }
-        | EDGE ID DIRECTED ID ENDLINE { printf("\t%s -> %s;", $2, $4); }
         | EDGE ID NONDIRECTED ID STRINGNAME ENDLINE { printf("\t%s -- %s [label=%s];", $2, $4, $5); }
         | EDGE ID NONDIRECTED ID ENDLINE { printf("\t%s -- %s;", $2, $4);}
         ;
