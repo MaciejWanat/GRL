@@ -34,6 +34,10 @@ EDGE 1--3 "Edge label";  #Non directed edge
 EDGE 1->3;               #Directed edge
 ```
 Edge label is optional.
+* To add an egde with a custom style:
+```
+EDGE 1->3 STYLE="dotted";
+```
 * To end a graph:
 ```
 END_GRAPH;

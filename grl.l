@@ -16,5 +16,6 @@ EDGE                          return EDGE;
 END_GRAPH                     return ENDGRAPH;
 "->"                          return DIRECTED;
 "--"                          return NONDIRECTED;
+STYLE=                        return STYLE;
 \"([a-z]|[A-Z]|[0-9]|" ")*\"  yylval.str = strdup(yytext); return STRINGNAME;
 ([a-z]|[A-Z]|[0-9])+          yylval.str = strdup(yytext); return ID;
