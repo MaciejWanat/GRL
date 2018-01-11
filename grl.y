@@ -34,86 +34,29 @@ commands: /* empty */
         ;
 
 command: startGraph
-        | startGraphLabel
-        | startDiGraph
-        | startDiGraphLabel
         | buildNode
-        | buildNodeLabel
-        | directedEdge
-        | nonDirectedEdge
-        | directedEdgeLabel
-        | nonDirectedEdgeLabel
+        | buildEdge
         | endGraph
         ;
 
 startGraph:
-        BEGINGRAPH ENDLINE
-        {
-                printf("graph {");
-        }
-        ;
-
-startGraphLabel:
-        BEGINGRAPH STRINGNAME ENDLINE
-        {
-                printf("graph %s {", $2);
-        }
-        ;
-
-startDiGraph:
-        BEGINDIGRAPH ENDLINE
-        {
-                printf("digraph {");
-        }
-        ;
-
-startDiGraphLabel:
-        BEGINDIGRAPH STRINGNAME ENDLINE
-        {
-                printf("digraph %s {", $2);
-        }
+        BEGINGRAPH ENDLINE { printf("graph {"); }
+        | BEGINGRAPH STRINGNAME ENDLINE { printf("graph %s {", $2); }
+        | BEGINDIGRAPH ENDLINE { printf("digraph {"); }
+        | BEGINDIGRAPH STRINGNAME ENDLINE { printf("digraph %s {", $2); }
         ;
 
 buildNode:
-        NODE ID ENDLINE
-        {
-                printf("\t%s;", $2);
-        }
+        NODE ID ENDLINE { printf("\t%s;", $2); }
+        | NODE ID STRINGNAME ENDLINE { printf("\t%s [label=%s];", $2, $3); }
         ;
 
-buildNodeLabel:
-        NODE ID STRINGNAME ENDLINE
-        {
-                printf("\t%s [label=%s];", $2, $3);
-        }
-        ;
-
-directedEdgeLabel:
-        EDGE ID DIRECTED ID STRINGNAME ENDLINE
-        {
-                printf("\t%s -> %s [label=%s];", $2, $4, $5);
-        }
-        ;
-
-directedEdge:
-        EDGE ID DIRECTED ID ENDLINE
-        {
-                printf("\t%s -> %s;", $2, $4);
-        }
-        ;
-
-nonDirectedEdgeLabel:
-        EDGE ID NONDIRECTED ID STRINGNAME ENDLINE
-        {
-                printf("\t%s -- %s [label=%s];", $2, $4, $5);
-        }
-        ;
-
-nonDirectedEdge:
-        EDGE ID NONDIRECTED ID ENDLINE
-        {
-                printf("\t%s -- %s;", $2, $4);
-        }
+buildEdge:
+        EDGE ID DIRECTED ID STRINGNAME ENDLINE { printf("\t%s -> %s [label=%s];", $2, $4, $5); }
+        | EDGE ID DIRECTED ID ENDLINE { printf("\t%s -> %s;", $2, $4); }
+        | EDGE ID DIRECTED ID ENDLINE { printf("\t%s -> %s;", $2, $4); }
+        | EDGE ID NONDIRECTED ID STRINGNAME ENDLINE { printf("\t%s -- %s [label=%s];", $2, $4, $5); }
+        | EDGE ID NONDIRECTED ID ENDLINE { printf("\t%s -- %s;", $2, $4);}
         ;
 
 endGraph:
