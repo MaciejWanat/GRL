@@ -2,8 +2,10 @@
     #include <stdio.h>
     #include <string.h>
 
-    char* defaultNodeShape;
-    char* defaultNodeStyle;
+    char* defaultNodeShapeStart = "";
+    char* defaultNodeStyleStart = "";
+    char* defaultNodeShape = "";
+    char* defaultNodeStyle = "";
 
     void yyerror(const char *str)
     {
@@ -55,29 +57,11 @@ startGraph:
 buildNode:
         NODE ID ENDLINE
         {
-                if(!defaultNodeShape)
-                  if(!defaultNodeStyle)
-                    printf("\t%s;", $2);
-                  else
-                    printf("\t%s, [style=%s];", $2, defaultNodeStyle);
-                else
-                  if(!defaultNodeStyle)
-                    printf("\t%s [shape=%s];", $2, defaultNodeShape);
-                  else
-                    printf("\t%s [shape=%s, style=%s];", $2, defaultNodeShape, defaultNodeStyle);
+              printf("\t%s [%s%s%s%s];", $2, defaultNodeStyleStart, defaultNodeStyle, defaultNodeShapeStart, defaultNodeShape);
         }
         | NODE ID STRINGNAME ENDLINE
         {
-                if(!defaultNodeShape)
-                  if(!defaultNodeStyle)
-                    printf("\t%s [label=%s];", $2, $3);
-                  else
-                    printf("\t%s, [ label=%s, style=%s,];", $2, $3, defaultNodeStyle);
-                else
-                  if(!defaultNodeStyle)
-                    printf("\t%s [label=%s, shape=%s];", $2, $3, defaultNodeShape);
-                  else
-                    printf("\t%s [label=%s, shape=%s, style=%s];", $2, $3, defaultNodeShape, defaultNodeStyle);
+              printf("\t%s [label=%s%s%s%s%s];", $2, $3, defaultNodeShapeStart, defaultNodeShape, defaultNodeStyleStart, defaultNodeStyle);
         }
         ;
 
@@ -109,13 +93,15 @@ endGraph:
 defaultNodeShape:
         DEFAULTNODESHAPE STRINGNAME ENDLINE
         {
-                defaultNodeShape = $2;
+              defaultNodeShapeStart = " shape=";
+              defaultNodeShape = $2;
         }
         ;
 
 defaultNodeStyle:
         DEFAULTNODESTYLE STRINGNAME ENDLINE
         {
-                defaultNodeStyle = $2;
+              defaultNodeStyleStart = " style=";
+              defaultNodeStyle = $2;
         }
         ;
