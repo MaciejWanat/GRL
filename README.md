@@ -1,5 +1,5 @@
 # GRL
-Program translating GRL (Graphs Representation Language) into dot, with lex and yacc. It was made as a Text Proccessing student's project.
+Program translating GRL (Graphs Representation Language) into dot, with lex and yacc. GRL is an artificial language made by me. Projecy was made as a Text Proccessing student's project.
 
 Contents:
 * grl.l - lex tokenizer for GRL language
@@ -55,3 +55,6 @@ DEFAULT_SHAPE "circle";
 ```
 DEFAULT_STYLE "dotted";
 ```
+
+Graph build from grlEx code:
+![Graph image](http://bit.ly/2D1pw3D)
