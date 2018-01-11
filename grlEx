@@ -1,5 +1,6 @@
 #A comment
 
+DEFAULT_SHAPE "circle";
 BEGIN_DIGRAPH "GraphInGRL";
 NODE 1 "Node one";
 NODE 2 "Node two";

@@ -2,6 +2,8 @@
     #include <stdio.h>
     #include <string.h>
 
+    char* defaultNodeShape;
+
     void yyerror(const char *str)
     {
             fprintf(stderr,"error: %s\n",str);
@@ -26,6 +28,7 @@
 
 %token BEGINDIGRAPH BEGINGRAPH NODE EDGE ENDGRAPH DIRECTED NONDIRECTED ENDLINE
 %token <str> STRINGNAME ID
+%token <defaultNodeShape> DEFAULTNODESHAPE
 
 %%
 
@@ -37,6 +40,7 @@ command: startGraph
         | buildNode
         | buildEdge
         | endGraph
+        | defaultShape
         ;
 
 startGraph:
@@ -47,8 +51,20 @@ startGraph:
         ;
 
 buildNode:
-        NODE ID ENDLINE { printf("\t%s;", $2); }
-        | NODE ID STRINGNAME ENDLINE { printf("\t%s [label=%s];", $2, $3); }
+        NODE ID ENDLINE
+        {
+                if(!defaultNodeShape)
+                  printf("\t%s;", $2);
+                else
+                  printf("\t%s [shape=%s];", $2, defaultNodeShape);
+        }
+        | NODE ID STRINGNAME ENDLINE
+        {
+                if(!defaultNodeShape)
+                  printf("\t%s [label=%s];", $2, $3);
+                else
+                  printf("\t%s [label=%s, shape=%s];", $2, $3, defaultNodeShape);
+        }
         ;
 
 buildEdge:
@@ -63,5 +79,12 @@ endGraph:
         ENDGRAPH ENDLINE
         {
                 printf("}");
+        }
+        ;
+
+defaultShape:
+        DEFAULTNODESHAPE STRINGNAME ENDLINE
+        {
+                defaultNodeShape = $2;
         }
         ;

@@ -30,10 +30,15 @@ NODE 1 "Node label";
 Node label is optional.
 * To draw a new edge:
 ```
-EDGE 1--3 "Edge label";
+EDGE 1--3 "Edge label";  #Non directed edge
+EDGE 1->3;               #Directed edge
 ```
-Edge label is optional. You can use -> to make a directed edge.
+Edge label is optional.
 * To end a graph:
 ```
 END_GRAPH;
+```
+* To set a default node shape:
+```
+DEFAULT_SHAPE "circle";
 ```

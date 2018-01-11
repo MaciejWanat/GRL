@@ -8,6 +8,7 @@
 "#".*                         ;
 " "                           ;
 ";"                           return ENDLINE;
+DEFAULT_SHAPE                 yylval.str = strdup(yytext); return DEFAULTNODESHAPE;
 BEGIN_GRAPH                   return BEGINGRAPH;
 BEGIN_DIGRAPH                 return BEGINDIGRAPH;
 NODE                          return NODE;
