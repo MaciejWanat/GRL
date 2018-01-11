@@ -5,7 +5,7 @@ Contents:
 * grl.l - lex tokenizer for GRL language
 * grl.y - yacc parser for GRL language
 * grlEx - example graph wrriten in GRL
-* Make - commands that builds lexer & parser, and then translates grlEx into dot and prints graph in ps format. To run the program you need to have Lex, Flex and dot installed on your machine.
+* Makefile - Makefile that builds lexer & parser, and then translates grlEx into dot and prints graph in ps format. To run it you need to have Lex, Yacc and dot installed on your machine.
 
 # GRL Documentation
 
