@@ -1,6 +1,7 @@
 #A comment
 
 DEFAULT_SHAPE "square";
+DEFAULT_STYLE "dotted";
 BEGIN_DIGRAPH "GraphInGRL";
 NODE 1 "Node one";
 NODE 2 "Node two";

@@ -3,6 +3,7 @@
     #include <string.h>
 
     char* defaultNodeShape;
+    char* defaultNodeStyle;
 
     void yyerror(const char *str)
     {
@@ -11,12 +12,13 @@
 
     int yywrap()
     {
-            return 1;
+          return 1;
     }
 
-    main()
+    int main()
     {
           yyparse();
+          return 0;
     }
 
 %}
@@ -27,8 +29,7 @@
 }
 
 %token STYLE BEGINDIGRAPH BEGINGRAPH NODE EDGE ENDGRAPH DIRECTED NONDIRECTED ENDLINE
-%token <str> STRINGNAME ID
-%token <defaultNodeShape> DEFAULTNODESHAPE
+%token <str> STRINGNAME ID DEFAULTNODESHAPE DEFAULTNODESTYLE
 
 %%
 
@@ -40,7 +41,8 @@ command: startGraph
         | buildNode
         | buildEdge
         | endGraph
-        | defaultShape
+        | defaultNodeShape
+        | defaultNodeStyle
         ;
 
 startGraph:
@@ -54,16 +56,28 @@ buildNode:
         NODE ID ENDLINE
         {
                 if(!defaultNodeShape)
-                  printf("\t%s;", $2);
+                  if(!defaultNodeStyle)
+                    printf("\t%s;", $2);
+                  else
+                    printf("\t%s, [style=%s];", $2, defaultNodeStyle);
                 else
-                  printf("\t%s [shape=%s];", $2, defaultNodeShape);
+                  if(!defaultNodeStyle)
+                    printf("\t%s [shape=%s];", $2, defaultNodeShape);
+                  else
+                    printf("\t%s [shape=%s, style=%s];", $2, defaultNodeShape, defaultNodeStyle);
         }
         | NODE ID STRINGNAME ENDLINE
         {
                 if(!defaultNodeShape)
-                  printf("\t%s [label=%s];", $2, $3);
+                  if(!defaultNodeStyle)
+                    printf("\t%s [label=%s];", $2, $3);
+                  else
+                    printf("\t%s, [ label=%s, style=%s,];", $2, $3, defaultNodeStyle);
                 else
-                  printf("\t%s [label=%s, shape=%s];", $2, $3, defaultNodeShape);
+                  if(!defaultNodeStyle)
+                    printf("\t%s [label=%s, shape=%s];", $2, $3, defaultNodeShape);
+                  else
+                    printf("\t%s [label=%s, shape=%s, style=%s];", $2, $3, defaultNodeShape, defaultNodeStyle);
         }
         ;
 
@@ -85,7 +99,6 @@ buildNonDirected:
         | EDGE ID NONDIRECTED ID STRINGNAME STYLE STRINGNAME ENDLINE { printf("\t%s -> %s [label=%s, style=%s];", $2, $4, $5, $7); }
         | EDGE ID NONDIRECTED ID STYLE STRINGNAME ENDLINE { printf("\t%s -> %s [style=%s];", $2, $4, $6); }
 
-
 endGraph:
         ENDGRAPH ENDLINE
         {
@@ -93,9 +106,16 @@ endGraph:
         }
         ;
 
-defaultShape:
+defaultNodeShape:
         DEFAULTNODESHAPE STRINGNAME ENDLINE
         {
                 defaultNodeShape = $2;
+        }
+        ;
+
+defaultNodeStyle:
+        DEFAULTNODESTYLE STRINGNAME ENDLINE
+        {
+                defaultNodeStyle = $2;
         }
         ;

@@ -46,3 +46,7 @@ END_GRAPH;
 ```
 DEFAULT_SHAPE "circle";
 ```
+* To set a default node style:
+```
+DEFAULT_STYLE "dotted";
+```
